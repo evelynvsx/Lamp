@@ -40,13 +40,20 @@ public class ObjectsExercise {
             Color offColor = Color.black;
             
             //create the lamp object and put it in array
-            lampBed[i] = new Lamp(STARTX*(i+1), YPOS, 10, 50, offColor);
+            //lampBed[i] = new Lamp(lampBed[i].getSize()*(i+1), YPOS);
+            
+            lampBed[0] = new Lamp(100, 100);
+            lampBed[1]= new Lamp(200,100);
+            lampBed[2] = new Lamp(300,100);
         }
         
         //draw each lamp
         for (Lamp lamp : lampBed) {
             lamp.draw();
         }
+        
+        //Setup mouse
+        UI.setMouseListener(this::doMouse);
     }
     
     /**
@@ -64,7 +71,7 @@ public class ObjectsExercise {
     
     /** Manages the Lamp objects */
     public void doMouse(String action, double x, double y) {
-        if (action.equals("clicked") && colour%2 == 0) {
+        if (action.equals("clicked") && colour == 0) {
             UI.setColor(Color.black);
             
             //check the location of the x and y against location of the lamp

@@ -31,9 +31,9 @@ public class Lamp
     private double lampX = -100;    //x position of the lamp
     private double lampY = -100;    //y position of the lamp
     
-    private int lampSize; 
-    private int lampHeight;
-    private int lampWidth;
+    private double lampSize; 
+    private double lampHeight;
+    private double lampWidth;
     
     private Color color;            //color of the lamp
     private Color currentColor = Color.black;   //set colour of bulb to black since it is off on the start
@@ -45,14 +45,13 @@ public class Lamp
     /** Constructor: passed the initial position.
      * Initialises the fields
      */
-    public Lamp(double x, double y, int size, int width, int stem, Color col){
+    public Lamp(double x, double y){
         //initialise instance variables
         this.lampX = x;
         this.lampY = y;
-        this.lampSize = size;
-        this.lampWidth = width;
-        this.lampHeight = stem;
-        this.color = col;
+        this.lampSize = SIZE;
+        this.lampHeight = SIZE;
+        this.color = currentColor;
         
         //set top, left, and bottom
         this.setTop();
@@ -99,6 +98,13 @@ public class Lamp
     }
     
     /**
+     * Get size method
+     */
+    public double getSize() {
+        return SIZE;
+    }
+    
+    /**
      * draws the lamp at its current position:
      * - the bulb of the right colour.
      * - the stem darkGrey
@@ -109,8 +115,9 @@ public class Lamp
         //draw stem
         Color stemColour = new Color(105, 105, 105);    //put dark grey as the stem colour
         UI.setColor(stemColour);                        //set color of the stem
-        UI.setLineWidth(2);                             //set width of the stem
+        UI.setLineWidth(WIDTH);                             //set width of the stem
         UI.drawLine(lampX, lampY, lampX, bottom);       //draw in stem
+        
         
         //draw lamp
         UI.setColor(this.currentColor);                 //set lamp color
