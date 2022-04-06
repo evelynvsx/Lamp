@@ -33,6 +33,7 @@ public class Lamp
     
     private int lampSize; 
     private int lampHeight;
+    private int lampWidth;
     
     private Color color;            //color of the lamp
     private Color currentColor = Color.black;   //set colour of bulb to black since it is off on the start
@@ -44,21 +45,56 @@ public class Lamp
     /** Constructor: passed the initial position.
      * Initialises the fields
      */
-    public Lamp(double x, double y, int size, int stem, Color col){
+    public Lamp(double x, double y, int size, int width, int stem, Color col){
         //initialise instance variables
         this.lampX = x;
         this.lampY = y;
         this.lampSize = size;
+        this.lampWidth = width;
         this.lampHeight = stem;
         this.color = col;
+        
+        //set top, left, and bottom
+        this.setTop();
+        this.setLeft();
+        this.setBottom();
+    }
+    
+    /**
+     * Get Left, right, top, bottom
+     */
+    public double getLeft() {
+        return this.left;
+    }
+    public double getRight() {
+        return this.left + this.lampSize;
+    }
+    public double getTop() {
+        return this.top;
+    }
+    public double getBottom() {
+        return this.bottom;
+    }
+    
+    /**
+     * Set left, top, bottom
+     */
+    public void setLeft() {
+        this.left = this.lampX - this.lampSize/2.0;
+    }
+    public void setTop() {
+        this.top = this.lampY - this.lampSize/2.0;
+    }
+    public void setBottom() {
+        this.bottom = this.lampY + this.lampHeight;
     }
     
     /**
      * Change the bulb's colour when it is clicked
      */
-    public void changeColor() {
+    public void addColor() {
         //change the colour of the bulb to another bright colour
-        this.currentColor = Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
+        // this.currentColor = Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
         UI.setColor(this.currentColor);
     }
     
@@ -70,6 +106,7 @@ public class Lamp
      * The width of the stem is a quater of its height
      */
     public void draw(){
+        //draw stem
         Color stemColour = new Color(105, 105, 105);    //put dark grey as the stem colour
         UI.setColor(stemColour);                        //set color of the stem
         UI.setLineWidth(2);                             //set width of the stem
@@ -93,16 +130,16 @@ public class Lamp
      * Reports whether the point (x,y) is on the bulb.
      * (x and y represent the position where the mouse was released):
      */
-    public boolean onBulb(double x, double y){
+    //public boolean onBulb(double x, double y){
         // an easy approximation is to pretend it is the enclosing rectangle.
         // It is nicer to do a little bit of geometry and get it right
         /*# YOUR CODE HERE */
-        boolean onBulb = true; 
+        //boolean onBulb = true; 
         
-        if (onBulb) {
+        //if (onBulb) {
             
-        }
-    }   
+        //}
+    //}   
 
     /**
      * Reports whether the point (x,y) is on the stem.
@@ -117,10 +154,19 @@ public class Lamp
      * Turns the light off.
      * Does not redraw
      */
-    public void turnOff(String stem, double x, double y){
+    //public void turnOff(String stem, double x, double y){
         //If the stem is clicked, turn off the lamp 
-        if (stem.equals("clicked")) {
-            UI.setColor(Color.black);
-        }
-    }    
+        //if (stem.equals("clicked")) {
+            //UI.setColor(Color.black);
+        //}
+    //}    
+    
+    /**
+     * Make the lamp change Color
+     */
+    public void changeColor() {
+        //Erase the lamp
+        this.erase();
+        
+    }
 }

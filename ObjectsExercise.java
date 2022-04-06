@@ -16,86 +16,85 @@ import java.awt.Color;
 public class ObjectsExercise {
     //set the colour of the lamp
     private Color color;            //color of the lamp
+    private int colour = 0;         
     private Color currentColor = Color.black;   //set colour of bulb to black since it is off on the start
-    
-    //the lamps
-    private Lamp myLamp;
-    private Lamp yrLamp;
-    
+   
     // Make an array of lamps
     private final int STARTX = 75;
-    private final int YPOS = 100;
-    private final int MAXLAMPS = 5;
+    private final int YPOS = 200;
+    private final int MAXLAMPS = 3;
     
     private Lamp[] lampBed = new Lamp[MAXLAMPS];    //array of lamps
     
-    /** Makes several Lamp objects */
-    public void createLamps() {
-        UI.clearPanes();
+    /**
+     * Constructor for objects of Lamp Class
+     */
+    public ObjectsExercise() {
+        UI.initialise();
+        UI.addButton("Random colour change", this::randomChange);
+        UI.addButton("Quit", UI::quit);
         
-        myLamp = new Lamp(-100, -100, 80, 80/4, currentColor);
-        myLamp.draw();
-        yrLamp = new Lamp(-200, -200, 80, 80/4, currentColor);
-        yrLamp.draw();
-        
+        //set up the lamp pos
         for (int i = 0; i < MAXLAMPS; i++) {
-            //set every flower to a random colour
-            Color col = UI.setColor(Color.black);
-            lampBed[i] = new Lamp(STARTX*(i+1), YPOS, 10, 50, col); //Create the flower object put in array
+            //set the lamp colour to black sinc eit is turned off
+            Color offColor = Color.black;
+            
+            //create the lamp object and put it in array
+            lampBed[i] = new Lamp(STARTX*(i+1), YPOS, 10, 50, offColor);
         }
         
-        //draw each flower
+        //draw each lamp
         for (Lamp lamp : lampBed) {
             lamp.draw();
         }
-    }   
-
+    }
+    
+    /**
+     * Randomly changes the colour of the lamps in the array
+     */
+    public void randomChange() {
+        for (int i = 0; i <10; i++) {
+            //choose a random lamp
+            int randomLamp = (int) (Math.random() * MAXLAMPS); 
+            
+            //Make the lamp change color
+            lampBed[randomLamp].changeColor();
+        }
+    }
+    
     /** Manages the Lamp objects */
-    public void manageLamps(String action, double x, double y) {
-        if (action.equals("released")) {
-            if (myLamp == null || yrLamp == null) {
-                UI. printMessage("Press Lamps button first to create some lamps");
-                return;     //the lamps haven't been constructed yet
+    public void doMouse(String action, double x, double y) {
+        if (action.equals("clicked") && colour%2 == 0) {
+            UI.setColor(Color.black);
+            
+            //check the location of the x and y against location of the lamp
+            for (Lamp lamp: lampBed) {
+                if ((x >= lamp.getLeft()) && (x <= lamp.getRight()) &&
+                (y >= lamp.getTop()) && (y <= lamp.getBottom())) {
+                    lamp.changeColor();
+                }
             }
-            if (myLamp.onBulb(x,y)) {
-                myLamp.changeColor();
-                myLamp.draw();
-            }
-            else if (myLamp.onStem(x,y)) {
-                myLamp.turnOff();
-                myLamp.draw();
-            }
-            else if (yrLamp.onBulb(x,y)) {
-                yrLamp.changeColor();
-                yrLamp.draw();
-            }
-            else if (yrLamp.onStem(x,y)) {
-                yrLamp.turnOff();
-                yrLamp.draw();
+        }
+        
+        else if (action.equals("clicked") && colour%2 != 0) {
+            UI.setColor(this.currentColor);
+            
+            //check the location of the x and y against location of the lamp
+            for (Lamp lamp: lampBed) {
+                if ((x >= lamp.getLeft()) && (x <= lamp.getRight()) &&
+                (y >= lamp.getTop()) && (y <= lamp.getBottom())) {
+                    lamp.changeColor();
+                }
             }
         }
     }   
-
-    public void clear() {
-        UI.clearPanes();
-        myLamp = null;
-        yrLamp = null;
-    }
-
-    // Main
-    /** Create a new ObjectExercise object and setup the interface */
-    public static void main(String[] args) {
-        UI.initialise();
-        UI.addButton("Quit", UI::quit);
-        
-        ObjectsExercise obj = new ObjectsExercise();
-        
-        //Add Buttons
-        UI.addButton("Lamps", obj::createLamps);
-        UI.addButton("Clear", obj::clear);
-        
-        //Setup mouse
-        UI.setMouseListener(obj::manageLamps);
+    
+    /**
+     * Color changer
+     */
+    public void addColour() {
+        colour += 1;    //add 1 to the colour so that everytime it is clicked, the colour will change
+        this.currentColor = Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
     }
 
 }
