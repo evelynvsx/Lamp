@@ -37,8 +37,9 @@ public class ObjectsExercise {
         
         //set up the lamp pos
         for (int i = 0; i < MAXLAMPS; i++) {
-            //set the lamp colour to black sinc eit is turned off
+            //set the lamp colour to black since it is turned off
             Color offColor = Color.black;
+            UI.setColor(Color.black);
             
             //create the lamp object and put it in array
             //lampBed[i] = new Lamp(lampBed[i].getSize()*(i+1), YPOS);
@@ -102,6 +103,13 @@ public class ObjectsExercise {
      */
     public void addColour() {
         colour += 1;    //add 1 to the colour so that everytime it is clicked, the colour will change
-        this.currentColor = Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
+        if (colour == 0) {
+            UI.setColor(Color.black);
+        }
+        else if (colour != 0) {
+            this.currentColor = Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
+            
+        }
+        //this.currentColor = Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
     }
 }

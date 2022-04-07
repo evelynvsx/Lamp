@@ -53,7 +53,8 @@ public class Lamp
         this.lampSize = SIZE;
         this.lampHeight = SIZE;
         
-        currentColor = Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
+        currentColor = Color.black;
+        //currentColor = Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
         this.color = currentColor;
         
         //set top, left, and bottom
@@ -139,16 +140,7 @@ public class Lamp
      * Reports whether the point (x,y) is on the bulb.
      * (x and y represent the position where the mouse was released):
      */
-    //public boolean onBulb(double x, double y){
-        // an easy approximation is to pretend it is the enclosing rectangle.
-        // It is nicer to do a little bit of geometry and get it right
-        /*# YOUR CODE HERE */
-        //boolean onBulb = true; 
-        
-        //if (onBulb) {
-            
-        //}
-    //}   
+    //public boolean onBulb(double x, double y){} 
 
     /**
      * Reports whether the point (x,y) is on the stem.
@@ -177,8 +169,9 @@ public class Lamp
         //Erase the lamp
         this.erase();
 
-        UI.setColor(Color.black);
-        Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
+        currentColor = Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
         UI.setColor(this.currentColor);
+        
+        this.draw();
     }
 }
