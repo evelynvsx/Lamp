@@ -37,6 +37,7 @@ public class Lamp
     
     private Color color;            //color of the lamp
     private Color currentColor = Color.black;   //set colour of bulb to black since it is off on the start
+    private int changeColor = 0;
     
     private double left;            //left of the lamp
     private double top;             //top of the lamp
@@ -51,6 +52,8 @@ public class Lamp
         this.lampY = y;
         this.lampSize = SIZE;
         this.lampHeight = SIZE;
+        
+        currentColor = Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
         this.color = currentColor;
         
         //set top, left, and bottom
@@ -115,9 +118,8 @@ public class Lamp
         //draw stem
         Color stemColour = new Color(105, 105, 105);    //put dark grey as the stem colour
         UI.setColor(stemColour);                        //set color of the stem
-        UI.setLineWidth(WIDTH);                             //set width of the stem
+        UI.setLineWidth(WIDTH);                         //set width of the stem
         UI.drawLine(lampX, lampY, lampX, bottom);       //draw in stem
-        
         
         //draw lamp
         UI.setColor(this.currentColor);                 //set lamp color
@@ -174,6 +176,9 @@ public class Lamp
     public void changeColor() {
         //Erase the lamp
         this.erase();
-        
+
+        UI.setColor(Color.black);
+        Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
+        UI.setColor(this.currentColor);
     }
 }

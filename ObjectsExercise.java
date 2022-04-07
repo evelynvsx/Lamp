@@ -32,6 +32,7 @@ public class ObjectsExercise {
     public ObjectsExercise() {
         UI.initialise();
         UI.addButton("Random colour change", this::randomChange);
+        //UI.addButton("Create Lamps", this::createLamps);
         UI.addButton("Quit", UI::quit);
         
         //set up the lamp pos
@@ -41,10 +42,10 @@ public class ObjectsExercise {
             
             //create the lamp object and put it in array
             //lampBed[i] = new Lamp(lampBed[i].getSize()*(i+1), YPOS);
-            
             lampBed[0] = new Lamp(100, 100);
             lampBed[1]= new Lamp(200,100);
             lampBed[2] = new Lamp(300,100);
+            
         }
         
         //draw each lamp
@@ -103,5 +104,4 @@ public class ObjectsExercise {
         colour += 1;    //add 1 to the colour so that everytime it is clicked, the colour will change
         this.currentColor = Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
     }
-
 }
