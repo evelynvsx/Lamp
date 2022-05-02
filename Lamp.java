@@ -31,6 +31,9 @@ public class Lamp
     private double lampX = -100;    //x position of the lamp
     private double lampY = -100;    //y position of the lamp
     
+    private double bulbX;
+    private double bulbY;
+      
     private double lampSize; 
     private double lampHeight;
     private double lampWidth;
@@ -43,6 +46,10 @@ public class Lamp
     private double top;             //top of the lamp
     private double bottom;          //bottom of the lamp
     
+    private double leftStem;        //left of the stem
+    private double topStem;         //top of the stem
+    private double bottomStem;      //bottom of the stem   
+    
     /** Constructor: passed the initial position.
      * Initialises the fields
      */
@@ -54,7 +61,6 @@ public class Lamp
         this.lampHeight = SIZE;
         
         currentColor = Color.black;
-        //currentColor = Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
         this.color = currentColor;
         
         //set top, left, and bottom
@@ -136,31 +142,54 @@ public class Lamp
         UI.eraseRect(left, top, lampSize+1, bottom+BUFFER);
     }
     
+    /**
+     * Checks whether the point (x,y) is on the bulb or the stem
+     * (x and y represent the position where the mouse was released)
+     */
+    public double checkPos(double x, double y, double bulbX, double bulbY) {
+        return Math.sqrt((bulbY - y) * (bulbY - y) + (bulbX - x) * (bulbX - x));
+    }
+    
     /** 
      * Reports whether the point (x,y) is on the bulb.
      * (x and y represent the position where the mouse was released):
      */
-    //public boolean onBulb(double x, double y){} 
-
+    public boolean onBulb(double x, double y) {
+        bulbX = left+40;
+        bulbY = top +40;
+        
+        if (checkPos(x, y, bulbX, bulbY) < SIZE) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
     /**
      * Reports whether the point (x,y) is on the stem.
      * (x and y represent the position where the mouse was released):
      */
-    //public boolean onStem(double x, double y){
+    public boolean onStem(double x, double y){
         /*# YOUR CODE HERE */
-        
-    //}   
+        if ((x >= left) && (x <= left) && (y >= top+SIZE) && (y <= top+2*SIZE))
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }   
 
     /**
      * Turns the light off.
      * Does not redraw
      */
-    //public void turnOff(String stem, double x, double y){
+    public void turnOff(){
         //If the stem is clicked, turn off the lamp 
-        //if (stem.equals("clicked")) {
-            //UI.setColor(Color.black);
-        //}
-    //}    
+        Color turnOff = new Color(0,0,0);
+        UI.setColor(turnOff);
+    }    
     
     /**
      * Make the lamp change Color

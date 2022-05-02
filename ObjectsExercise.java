@@ -31,10 +31,18 @@ public class ObjectsExercise {
      */
     public ObjectsExercise() {
         UI.initialise();
+        UI.addButton("Create lamps", this::createLamps);
         UI.addButton("Random colour change", this::randomChange);
-        //UI.addButton("Create Lamps", this::createLamps);
         UI.addButton("Quit", UI::quit);
         
+        //Setup mouse
+        UI.setMouseListener(this::doMouse);
+    }
+    
+    /**
+     * Create lamps
+     */
+    public void createLamps() {
         //set up the lamp pos
         for (int i = 0; i < MAXLAMPS; i++) {
             //set the lamp colour to black since it is turned off
@@ -53,16 +61,13 @@ public class ObjectsExercise {
         for (Lamp lamp : lampBed) {
             lamp.draw();
         }
-        
-        //Setup mouse
-        UI.setMouseListener(this::doMouse);
     }
     
     /**
      * Randomly changes the colour of the lamps in the array
      */
     public void randomChange() {
-        for (int i = 0; i <10; i++) {
+        for (int i = 0; i < 10; i++) {
             //choose a random lamp
             int randomLamp = (int) (Math.random() * MAXLAMPS); 
             
@@ -85,7 +90,14 @@ public class ObjectsExercise {
             }
         }
         
-        else if (action.equals("clicked") && colour%2 != 0) {
+        else if (action.equals("released")){
+            if (lampBed[0] == null  || lampBed[1] == null || lampBed[2] == null) {
+                UI.printMessage("Press the 'Create Lamps' button first to create lamps");
+                return;
+            }
+        }
+        
+        else if (action.equals("clicked") && colour != 0) {
             UI.setColor(this.currentColor);
             
             //check the location of the x and y against location of the lamp
@@ -97,7 +109,7 @@ public class ObjectsExercise {
             }
         }
     }   
-    
+   
     /**
      * Color changer
      */
@@ -108,8 +120,6 @@ public class ObjectsExercise {
         }
         else if (colour != 0) {
             this.currentColor = Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
-            
         }
-        //this.currentColor = Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
     }
 }
